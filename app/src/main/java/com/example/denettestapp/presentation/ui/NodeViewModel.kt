@@ -1,7 +1,7 @@
-package com.example.denettestapp.ui
+package com.example.denettestapp.presentation.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.denettestapp.data.ITreeRepository
+import com.example.denettestapp.data.repository.ITreeRepository
 import com.example.denettestapp.data.common.DataState
 import com.example.denettestapp.tree.Node
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +17,18 @@ class NodeViewModel
 ): ViewModel() {
     private val _node = MutableStateFlow<DataState<Node>>(DataState.Init)
 
-    val partyList: StateFlow<DataState<Node>>
+    val node: StateFlow<DataState<Node>>
         get() = _node
+
+    fun getNode(nodeId: Int) {
+
+    }
+
+    fun createNode() {
+
+    }
+
+    fun deleteNode() {
+
+    }
 }
