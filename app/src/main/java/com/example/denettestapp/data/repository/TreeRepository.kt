@@ -43,7 +43,7 @@ class TreeRepository
         if (rowId != -1L) {
             return@withContext DataState.Data(rowId)
         } else {
-            return@withContext DataState.Error("The node can't be inserted ")
+            return@withContext DataState.Error("The node can't be inserted")
         }
     }
 

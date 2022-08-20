@@ -19,8 +19,18 @@ class NodeViewModel
 ): ViewModel() {
     private val _node = MutableStateFlow<DataState<Node>>(DataState.Init)
 
+    private val _error = MutableStateFlow("")
+
+    private val _isDeleted = MutableStateFlow(false)
+
     val node: StateFlow<DataState<Node>>
         get() = _node
+
+    val error: StateFlow<String>
+        get() = _error
+
+    val isDeleted: StateFlow<Boolean>
+        get() = _isDeleted
 
     fun getNode(nodeId: Long) = viewModelScope.launch {
         _node.value = DataState.Loading
@@ -28,25 +38,36 @@ class NodeViewModel
         _node.value = result
     }
 
-    // TODO StateFlow
     fun createNode() = viewModelScope.launch {
-        val parentNode = (_node.value as DataState.Data).data.parent
-        if (parentNode != null) {
-            val result = treeRepository.createNode(parentNode)
-
+        val node = (_node.value as? DataState.Data)?.data
+        if (node != null) {
+            val result = treeRepository.createNode(node)
+            if (result is DataState.Error) {
+                _error.value = result.error
+            } else if (result is DataState.Data) {
+                getNode((_node.value as? DataState.Data)?.data?.id ?: 1)
+            }
         } else {
-
+            _error.value = "The node can't be inserted"
         }
     }
 
-    // TODO StateFlow
     fun deleteNode() = viewModelScope.launch {
-        val node = (_node.value as DataState.Data).data
-        if (node != null) {
+        val node = (_node.value as? DataState.Data)?.data
+        val parentNode = node?.parent
+        if (parentNode != null) {
             val result = treeRepository.deleteNode(node)
-
+            if (result is DataState.Error) {
+                _error.value = "The node can't be deleted"
+            } else if (result is DataState.Data) {
+                _isDeleted.value = true
+            }
         } else {
-
+            _error.value = "The node can't be deleted"
         }
+    }
+
+    fun clearError() {
+        _error.value = ""
     }
 }
