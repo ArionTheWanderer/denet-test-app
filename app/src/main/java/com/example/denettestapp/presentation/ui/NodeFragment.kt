@@ -12,12 +12,11 @@ import com.example.denettestapp.presentation.ui.common.BaseFragment
 
 private const val ARG_PARAM_ID = "id"
 private const val ARG_PARAM_NAME = "name"
-private const val ARG_PARAM_IS_ROOT = "root"
 
 /**
  * Во фрагмент передается параметр с помощью фабричного метода
- * Параметр сразу сохраняется во вьюмодели
- * При пересоздании фрагмента, он проверяет, есть ли у вьюмодели параметр
+ * Параметр сразу сохраняется во вьюмодели и в savedInstanceState
+ * При пересоздании фрагмента, он проверяет, есть ли сохраненное состояние, и подтягивает данные с вьюмодели
  */
 class NodeFragment : BaseFragment() {
     private var nodeId = 0L
