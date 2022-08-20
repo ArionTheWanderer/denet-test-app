@@ -15,6 +15,6 @@ data class NodeEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     val id: Long,
-    @ColumnInfo(name = "parent_id") val parentId: Long,
+    @ColumnInfo(name = "parent_id") val parentId: Long?,
     @ColumnInfo(name = "name") val name: String
 )

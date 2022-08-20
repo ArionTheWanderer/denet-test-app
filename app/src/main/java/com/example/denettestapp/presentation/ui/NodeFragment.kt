@@ -20,11 +20,12 @@ private const val ARG_PARAM_IS_ROOT = "root"
  * При пересоздании фрагмента, он проверяет, есть ли у вьюмодели параметр
  */
 class NodeFragment : BaseFragment() {
-    private var nodeId = 0
+    private var nodeId = 0L
     private var nodeName: String = "root"
+
     private var navActivity: NavActivity? = null
     private var binding: FragmentNodeBinding? = null
-
+    // TODO оставить в активити или нет?
     private val viewModel: NodeViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
@@ -40,13 +41,13 @@ class NodeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
-            nodeId = savedInstanceState.getInt(ARG_PARAM_ID)
+            nodeId = savedInstanceState.getLong(ARG_PARAM_ID)
             savedInstanceState.getString(ARG_PARAM_NAME)?.let {
                 nodeName = it
             }
         } else if (arguments != null) {
             val args = arguments as Bundle
-            nodeId = args.getInt(ARG_PARAM_ID)
+            nodeId = args.getLong(ARG_PARAM_ID)
             args.getString(ARG_PARAM_NAME)?.let {
                 nodeName = it
             }
@@ -76,7 +77,7 @@ class NodeFragment : BaseFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(ARG_PARAM_ID, nodeId)
+        outState.putLong(ARG_PARAM_ID, nodeId)
         outState.putString(ARG_PARAM_NAME, nodeName)
     }
 
@@ -95,16 +96,16 @@ class NodeFragment : BaseFragment() {
          * @return A new instance of fragment NodeFragment.
          */
         @JvmStatic
-        fun newInstance(nodeId: Int, nodeName: String) =
+        fun newInstance(nodeId: Long, nodeName: String) =
                 NodeFragment().apply {
                     arguments = Bundle().apply {
-                        putInt(ARG_PARAM_ID, nodeId)
+                        putLong(ARG_PARAM_ID, nodeId)
                         putString(ARG_PARAM_NAME, nodeName)
                     }
                 }
     }
 
     interface NavActivity {
-        fun navigateToNode(nodeId: Int, nodeName: String, isRoot: Boolean)
+        fun navigateToNode(nodeId: Long, nodeName: String)
     }
 }

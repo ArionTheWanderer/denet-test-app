@@ -8,8 +8,12 @@ import javax.inject.Singleton
 @Singleton
 class NodeEntityMapper @Inject constructor() {
 
-    fun mapToNode(parentEntity: NodeEntity, entity: NodeEntity, childEntities: List<NodeEntity>): Node {
-        val parentNode = Node(id = parentEntity.id, name = parentEntity.name, parent = null, children = listOf())
+    fun mapToNode(parentEntity: NodeEntity?, entity: NodeEntity, childEntities: List<NodeEntity>): Node {
+        val parentNode: Node? = if (parentEntity != null) {
+            Node(id = parentEntity.id, name = parentEntity.name, parent = null, children = listOf())
+        } else {
+            null
+        }
         val childNodes: MutableList<Node> = mutableListOf()
         for (childEntity in childEntities) {
             val childNode = Node(id = childEntity.id, name = childEntity.name, children = listOf())

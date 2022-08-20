@@ -25,9 +25,9 @@ class MainActivity : BaseActivity(), NodeFragment.NavActivity {
         setContentView(R.layout.activity_main)
     }
 
-    override fun navigateToNode(nodeId: Int, isRoot: Boolean) {
+    override fun navigateToNode(nodeId: Long, nodeName: String) {
         supportFragmentManager.commit {
-            val destinationNode = NodeFragment.newInstance(nodeId, isRoot)
+            val destinationNode = NodeFragment.newInstance(nodeId, nodeName)
             replace(R.id.fragment_container, destinationNode)
             setReorderingAllowed(true)
         }

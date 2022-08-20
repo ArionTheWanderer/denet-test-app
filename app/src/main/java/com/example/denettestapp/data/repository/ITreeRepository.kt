@@ -1,10 +1,10 @@
 package com.example.denettestapp.data.repository
 
 import com.example.denettestapp.data.common.DataState
-import org.w3c.dom.Node
+import com.example.denettestapp.tree.Node
 
 interface ITreeRepository {
-    fun getNode(nodeId: Int): DataState<Node>
-    fun createNode()
-    fun deleteNode()
+    suspend fun getNode(nodeId: Long): DataState<Node>
+    suspend fun createNode(parentNode: Node): DataState<Long>
+    suspend fun deleteNode(node: Node): DataState<Int>
 }
