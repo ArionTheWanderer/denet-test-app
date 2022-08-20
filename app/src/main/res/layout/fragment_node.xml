@@ -22,39 +22,54 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/tv_node_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/text_title_margin"
+        android:layout_marginStart="@dimen/text_title_margin"
+        android:text="@string/tv_title_parent"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="@dimen/text_title_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout_node" />
+
+    <TextView
+        android:id="@+id/tv_node_children"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/text_title_margin"
+        android:layout_marginEnd="@dimen/text_title_margin"
+        android:text="@string/tv_title_children"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="@dimen/text_title_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout_node" />
+
     <LinearLayout
         android:id="@+id/ll_node_parent"
-        android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/ll_margin"
+        android:layout_marginStart="@dimen/ll_margin"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout_node" />
+        app:layout_constraintTop_toBottomOf="@id/tv_node_parent" />
 
     <LinearLayout
         android:id="@+id/ll_node_children"
-        android:layout_marginEnd="10dp"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/ll_margin"
+        android:layout_marginEnd="@dimen/ll_margin"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout_node" />
-
-    <ProgressBar
-        android:id="@+id/pb_node"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        app:layout_anchorGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_node_children" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

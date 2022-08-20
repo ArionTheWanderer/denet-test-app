@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "node",
     indices = [
-        Index(value = ["first_name", "last_name"], unique = true)
+        Index(value = ["name"], unique = true)
     ]
 )
 data class NodeEntity(

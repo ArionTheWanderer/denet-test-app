@@ -4,15 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.denettestapp.data.repository.ITreeRepository
 import com.example.denettestapp.data.common.DataState
-import com.example.denettestapp.tree.Node
+import com.example.denettestapp.presentation.model.tree.Node
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * TODO Создать инфраструктуру DI для создания вьюмоделей
- */
 class NodeViewModel
 @Inject constructor(
     private val treeRepository: ITreeRepository

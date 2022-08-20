@@ -4,16 +4,12 @@ import com.example.denettestapp.data.common.DataState
 import com.example.denettestapp.data.common.NodeEntityMapper
 import com.example.denettestapp.data.db.NodeDao
 import com.example.denettestapp.data.db.NodeEntity
-import com.example.denettestapp.tree.Node
+import com.example.denettestapp.presentation.model.tree.Node
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * TODO Сохранение дерева в БД
- * Хранить будем в одной таблице (id, id родителя, имя) и маппить при передаче слою presentation
- */
 @Singleton
 class TreeRepository
 @Inject constructor(
@@ -38,12 +34,12 @@ class TreeRepository
     }
 
     override suspend fun createNode(parentNode: Node): DataState<Long> = withContext(Dispatchers.IO) {
-        val newEntity = NodeEntity(id = 0, parentId = parentNode.id, name = getRandomString(8))
+        val newEntity = NodeEntity(id = 0, parentId = parentNode.id, name = getRandomString(10))
         val rowId = nodeDao.insertNode(newEntity)
         if (rowId != -1L) {
             return@withContext DataState.Data(rowId)
         } else {
-            return@withContext DataState.Error("The node can't be inserted")
+            return@withContext DataState.Error("Duplicate. Try again")
         }
     }
 

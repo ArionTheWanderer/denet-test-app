@@ -1,16 +1,10 @@
 package com.example.denettestapp.presentation.ui
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
 import com.example.denettestapp.R
 import com.example.denettestapp.presentation.ui.common.BaseActivity
-import javax.inject.Inject
 
-/**
- * TODO При входе в приложение доставать из SharedPreferences последний экран (вроде не надо)
- */
 class MainActivity : BaseActivity(), NodeFragment.NavActivity {
 
     private var wasNotOpenedYet = true

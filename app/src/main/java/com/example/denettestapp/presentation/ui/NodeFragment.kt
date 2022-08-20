@@ -8,32 +8,25 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import com.example.denettestapp.R
 import com.example.denettestapp.data.common.DataState
 import com.example.denettestapp.databinding.FragmentNodeBinding
 import com.example.denettestapp.presentation.ui.common.BaseFragment
-import com.example.denettestapp.tree.Node
+import com.example.denettestapp.presentation.model.tree.Node
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val ARG_PARAM_ID = "id"
 private const val ARG_PARAM_NAME = "name"
 
-/**
- * Во фрагмент передается параметр с помощью фабричного метода
- * Параметр сразу сохраняется во вьюмодели и в savedInstanceState
- * При пересоздании фрагмента, он проверяет, есть ли сохраненное состояние, и подтягивает данные с вьюмодели
- */
 class NodeFragment : BaseFragment() {
     private var nodeId = 0L
     private var nodeName: String = "root"
     private var navActivity: NavActivity? = null
     private var binding: FragmentNodeBinding? = null
-    // TODO оставить в активити или нет?
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -73,26 +66,7 @@ class NodeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentNodeBinding.bind(view)
-        binding?.toolbarNode?.title = nodeId.toString()
-        binding?.toolbarNode?.inflateMenu(R.menu.menu_node)
-        binding?.toolbarNode?.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.action_create_node) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    whenStarted {
-                        viewModel.createNode()
-                    }
-                }
-                return@setOnMenuItemClickListener true
-            } else if (item.itemId == R.id.action_delete_node) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    whenStarted {
-                        viewModel.deleteNode()
-                    }
-                }
-                return@setOnMenuItemClickListener true
-            }
-            true
-        }
+        setupToolbar()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -152,9 +126,33 @@ class NodeFragment : BaseFragment() {
         navActivity = null
     }
 
+    private fun setupToolbar() {
+        binding?.toolbarNode?.title = nodeName
+        binding?.toolbarNode?.inflateMenu(R.menu.menu_node)
+        binding?.toolbarNode?.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.action_create_node) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    whenStarted {
+                        viewModel.createNode()
+                    }
+                }
+                return@setOnMenuItemClickListener true
+            } else if (item.itemId == R.id.action_delete_node) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    whenStarted {
+                        viewModel.deleteNode()
+                    }
+                }
+                return@setOnMenuItemClickListener true
+            }
+            true
+        }
+    }
+
     private fun updateUi(node: Node) {
         binding?.llNodeParent?.removeAllViews()
         binding?.llNodeChildren?.removeAllViews()
+        binding?.toolbarNode?.menu?.findItem(R.id.action_create_node)?.isEnabled = true
         if (node.parent != null) {
             binding?.toolbarNode?.menu?.findItem(R.id.action_delete_node)?.isEnabled = true
             val button = Button(requireContext())
@@ -184,13 +182,6 @@ class NodeFragment : BaseFragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param nodeId Id of node in tree.
-         * @return A new instance of fragment NodeFragment.
-         */
         @JvmStatic
         fun newInstance(nodeId: Long, nodeName: String) =
                 NodeFragment().apply {

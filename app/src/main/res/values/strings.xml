@@ -2,4 +2,6 @@
     <string name="app_name">DeNetTestApp</string>
     <string name="action_create_node">Create a new node</string>
     <string name="action_delete_node">Delete current code</string>
+    <string name="tv_title_parent">Parent</string>
+    <string name="tv_title_children">Children</string>
 </resources>

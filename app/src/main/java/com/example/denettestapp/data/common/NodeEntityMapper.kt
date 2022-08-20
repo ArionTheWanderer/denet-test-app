@@ -1,7 +1,7 @@
 package com.example.denettestapp.data.common
 
 import com.example.denettestapp.data.db.NodeEntity
-import com.example.denettestapp.tree.Node
+import com.example.denettestapp.presentation.model.tree.Node
 import javax.inject.Inject
 import javax.inject.Singleton
 

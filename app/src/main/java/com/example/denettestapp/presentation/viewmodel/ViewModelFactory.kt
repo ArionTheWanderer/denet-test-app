@@ -9,7 +9,6 @@ class ViewModelFactory @Inject constructor(
     private val viewModelMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        Log.d(TAG, "PartyViewModelFactory create")
         val result = viewModelMap[modelClass] ?: viewModelMap.entries.firstOrNull {
             modelClass.isAssignableFrom(it.key)
         }?.value ?: throw IllegalArgumentException("Unknown model class $modelClass")
@@ -17,5 +16,3 @@ class ViewModelFactory @Inject constructor(
         return result.get() as T
     }
 }
-
-//private const val TAG = "PartyViewModelFactory"
